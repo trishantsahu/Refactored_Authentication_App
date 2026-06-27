@@ -1,0 +1,8 @@
+.nav-pills .nav-link {
+    border-radius: 0; /* Make the tabs rectangular */
+    text-align: left;
+}
+.nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}

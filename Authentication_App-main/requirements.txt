@@ -1,0 +1,7 @@
+Django>=5.1,<5.2
+django-formtools>=2.5,<3.0
+
+# Only required if you switch EMAIL_BACKEND to
+# UserAuthentication.utils.email_backend_with_proxy.ProxySMTPBackend
+# (commented out in settings.py by default).
+# PySocks>=1.7,<2.0

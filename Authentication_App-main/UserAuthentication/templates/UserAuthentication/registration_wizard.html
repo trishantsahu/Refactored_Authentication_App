@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'UserAuthentication/css/registration_wizard.css' %}">
+
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-5">
+
+        {% if wizard.steps.current == 'register' %}
+            <h2 class="text-center">REGISTER</h2>
+        {% elif wizard.steps.current == 'otp' %}
+            <h2 class="text-center">Verify Your OTP</h2>
+        {% else %}
+            <h2 class="text-center">Create Your Credentials</h2>
+        {% endif %}
+
+        <p class="text-center text-muted">
+            Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}
+        </p>
+
+        {% if messages %}
+        <div class="alert alert-warning">
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if wizard.steps.current == 'otp' %}
+            <div id="otp-time" data-generated-at="{{ otp_generated_at }}" data-expiry-minutes="{{ otp_expiry_minutes }}"></div>
+            <p class="text-center">OTP expires in <span id="countdown"></span></p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ wizard.management_form }}
+
+            {% if wizard.form.non_field_errors %}
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    {% for error in wizard.form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {{ wizard.form.as_p }}
+
+            {% if wizard.steps.prev %}
+                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.first }}">First step</button>
+                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.prev }}">Previous step</button>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">
+                {% if wizard.steps.current == wizard.steps.last %}Finish{% else %}Next{% endif %}
+            </button>
+        </form>
+
+        {% if wizard.steps.current == 'register' %}
+            <p class="mt-3">Registered user? <a href="{% url 'login' %}">Login here</a></p>
+        {% endif %}
+    </div>
+</div>
+
+{% if wizard.steps.current == 'otp' %}
+<script src="{% static 'UserAuthentication/js/otp_countdown.js' %}"></script>
+{% endif %}
+{% endblock %}
