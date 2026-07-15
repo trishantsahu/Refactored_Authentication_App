@@ -1,0 +1,117 @@
+/*
+ * DRISHTI Button System
+ * Slightly rounded (8px), consistent across all pages.
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-5);
+  height: 42px;
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--ease-normal), border-color var(--ease-normal),
+              color var(--ease-normal), box-shadow var(--ease-normal),
+              transform var(--ease-fast);
+  user-select: none;
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* ── Primary ─────────── */
+.btn--primary {
+  background: var(--drishti-blue);
+  border-color: var(--drishti-blue);
+  color: #FFFFFF;
+}
+.btn--primary:hover {
+  background: var(--drishti-blue-hover);
+  border-color: var(--drishti-blue-hover);
+  box-shadow: 0 4px 12px rgba(0,90,156,0.35);
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.btn--primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0,90,156,0.3);
+}
+
+/* ── Secondary ─────────── */
+.btn--secondary {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+.btn--secondary:hover {
+  background: var(--color-surface-raised);
+  border-color: var(--drishti-blue);
+  color: var(--drishti-blue);
+  text-decoration: none;
+}
+
+/* ── Ghost ─────────── */
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--drishti-blue);
+}
+.btn--ghost:hover {
+  background: var(--drishti-blue-light);
+  color: var(--drishti-blue-hover);
+  text-decoration: none;
+}
+
+/* ── Danger ─────────── */
+.btn--danger {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: #FFFFFF;
+}
+.btn--danger:hover {
+  background: #A82222;
+  border-color: #A82222;
+  text-decoration: none;
+}
+
+/* ── Sizes ─────────── */
+.btn--sm {
+  height: 32px;
+  padding: 0 var(--sp-4);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+}
+.btn--lg {
+  height: 50px;
+  padding: 0 var(--sp-8);
+  font-size: var(--text-md);
+}
+
+/* ── Full width ─────────── */
+.btn--block { width: 100%; }
+
+/* ── Loading state ─────────── */
+.btn--loading {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* ── Dark mode ─────────── */
+[data-theme="dark"] .btn--secondary {
+  background: var(--color-surface-raised);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+[data-theme="dark"] .btn--ghost {
+  color: var(--auth-left-accent);
+}
+[data-theme="dark"] .btn--ghost:hover {
+  background: var(--drishti-blue-light);
+}

@@ -1,70 +1,144 @@
-{% extends "base_generic.html" %}
+{% extends "auth_base.html" %}
 {% load static %}
-{% block content %}
-<link rel="stylesheet" href="{% static 'UserAuthentication/css/registration_wizard.css' %}">
 
-<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="col-md-5">
+{% block title %}DRISHTI — Register{% endblock %}
 
-        {% if wizard.steps.current == 'register' %}
-            <h2 class="text-center">REGISTER</h2>
-        {% elif wizard.steps.current == 'otp' %}
-            <h2 class="text-center">Verify Your OTP</h2>
-        {% else %}
-            <h2 class="text-center">Create Your Credentials</h2>
-        {% endif %}
+{% block body %}
+<div class="auth-center">
 
-        <p class="text-center text-muted">
-            Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}
-        </p>
+  <!-- Mini brand mark -->
+  <a href="{% url 'login' %}" class="auth-mini-brand">
+    <img src="{% static 'UserAuthentication/images/emblem.svg' %}"
+         alt="DRISHTI" class="auth-mini-brand__emblem">
+    <span class="auth-mini-brand__name">DRISHTI</span>
+  </a>
 
-        {% if messages %}
-        <div class="alert alert-warning">
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+  <div class="auth-card">
 
-        {% if wizard.steps.current == 'otp' %}
-            <div id="otp-time" data-generated-at="{{ otp_generated_at }}" data-expiry-minutes="{{ otp_expiry_minutes }}"></div>
-            <p class="text-center">OTP expires in <span id="countdown"></span></p>
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-            {{ wizard.management_form }}
-
-            {% if wizard.form.non_field_errors %}
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    {% for error in wizard.form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-
-            {{ wizard.form.as_p }}
-
-            {% if wizard.steps.prev %}
-                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.first }}">First step</button>
-                <button name="wizard_goto_step" class="btn btn-secondary" type="submit" value="{{ wizard.steps.prev }}">Previous step</button>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">
-                {% if wizard.steps.current == wizard.steps.last %}Finish{% else %}Next{% endif %}
-            </button>
-        </form>
-
-        {% if wizard.steps.current == 'register' %}
-            <p class="mt-3">Registered user? <a href="{% url 'login' %}">Login here</a></p>
-        {% endif %}
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step-dot {% if wizard.steps.current == 'register' %}active{% elif wizard.steps.step0 > 0 %}done{% endif %}"></div>
+      <div class="step-dot {% if wizard.steps.current == 'otp' %}active{% elif wizard.steps.step0 > 1 %}done{% endif %}"></div>
+      <div class="step-dot {% if wizard.steps.current == 'credentials' %}active{% endif %}"></div>
+      <span class="step-label">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
     </div>
-</div>
 
-{% if wizard.steps.current == 'otp' %}
+    <!-- Heading per step -->
+    {% if wizard.steps.current == 'register' %}
+      <h1 class="auth-card__heading">Create Account</h1>
+      <p class="auth-card__subheading">Enter your BARC employee ID and email to begin.</p>
+    {% elif wizard.steps.current == 'otp' %}
+      <h1 class="auth-card__heading">Verify Your Email</h1>
+      <p class="auth-card__subheading">Enter the 6-digit OTP sent to your BARC email address.</p>
+    {% else %}
+      <h1 class="auth-card__heading">Set Your Password</h1>
+      <p class="auth-card__subheading">Choose a strong password for your DRISHTI account.</p>
+    {% endif %}
+
+    <!-- Django messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert--{{ message.tags|default:'info' }}" style="margin-bottom:var(--sp-5);">
+          <div class="alert__body">{{ message }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Form errors -->
+    {% if wizard.form.non_field_errors %}
+      <div class="alert alert--danger" style="margin-bottom:var(--sp-5);">
+        <div class="alert__body">
+          {% for error in wizard.form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- OTP countdown (step 2 only) -->
+    {% if wizard.steps.current == 'otp' %}
+      <div class="otp-countdown" id="otpCountdown">
+        <span>⏱</span>
+        <span>OTP expires in</span>
+        <span class="otp-countdown__time" id="countdownDisplay">--:--</span>
+      </div>
+      <div id="otp-time"
+           data-generated-at="{{ otp_generated_at }}"
+           data-expiry-minutes="{{ otp_expiry_minutes }}"
+           hidden></div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ wizard.management_form }}
+
+      <!-- Render each form field with DRISHTI styling -->
+      {% for field in wizard.form %}
+        <div class="field">
+          <label class="field__label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+            {% if field.field.required %}<span class="required">*</span>{% endif %}
+          </label>
+
+          {% if field.field.widget.input_type == 'password' %}
+            <div class="field__pw-wrap">
+              <input class="field__input {% if field.errors %}field__input--error{% endif %}"
+                     type="password"
+                     name="{{ field.html_name }}"
+                     id="{{ field.id_for_label }}"
+                     placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}"
+                     autocomplete="{{ field.field.widget.attrs.autocomplete|default:'new-password' }}">
+              <button type="button" class="field__pw-toggle"
+                      onclick="togglePw('{{ field.id_for_label }}',this)"
+                      aria-label="Show/hide {{ field.label }}">👁</button>
+            </div>
+          {% else %}
+            <input class="field__input {% if field.errors %}field__input--error{% endif %}"
+                   type="{{ field.field.widget.input_type|default:'text' }}"
+                   name="{{ field.html_name }}"
+                   id="{{ field.id_for_label }}"
+                   value="{{ field.value|default:'' }}"
+                   placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}"
+                   autocomplete="{{ field.field.widget.attrs.autocomplete|default:'' }}">
+          {% endif %}
+
+          {% if field.help_text %}
+            <div class="field__help">{{ field.help_text }}</div>
+          {% endif %}
+          {% for error in field.errors %}
+            <span class="field__error">{{ error }}</span>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-6);">
+        {% if wizard.steps.prev %}
+          <button name="wizard_goto_step" class="btn btn--secondary" type="submit"
+                  value="{{ wizard.steps.prev }}" style="flex:0 0 auto;">
+            ← Back
+          </button>
+        {% endif %}
+        <button type="submit" class="btn btn--primary btn--block">
+          {% if wizard.steps.current == wizard.steps.last %}Create Account{% else %}Continue →{% endif %}
+        </button>
+      </div>
+    </form>
+
+    {% if wizard.steps.current == 'register' %}
+    <div class="auth-footer-links">
+      <span>Already registered? <a href="{% url 'login' %}">Sign in</a></span>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
 <script src="{% static 'UserAuthentication/js/otp_countdown.js' %}"></script>
-{% endif %}
+<script>
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+</script>
 {% endblock %}

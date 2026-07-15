@@ -1,0 +1,33 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ashoka Chakra">
+  <!-- Outer ring -->
+  <circle cx="50" cy="50" r="46" fill="none" stroke="#000080" stroke-width="3.5"/>
+  <!-- Inner ring -->
+  <circle cx="50" cy="50" r="38" fill="none" stroke="#000080" stroke-width="1.2"/>
+  <!-- Hub -->
+  <circle cx="50" cy="50" r="7" fill="#000080"/>
+  <!-- 24 Spokes -->
+  <line x1="59.00" y1="50.00" x2="88.00" y2="50.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="58.69" y1="52.33" x2="86.57" y2="60.87" stroke="#000080" stroke-width="1.8"/>
+  <line x1="57.79" y1="54.50" x2="82.37" y2="71.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="56.36" y1="56.36" x2="75.70" y2="75.70" stroke="#000080" stroke-width="1.8"/>
+  <line x1="54.50" y1="57.79" x2="67.00" y2="82.37" stroke="#000080" stroke-width="1.8"/>
+  <line x1="52.33" y1="58.69" x2="56.87" y2="86.57" stroke="#000080" stroke-width="1.8"/>
+  <line x1="50.00" y1="59.00" x2="50.00" y2="88.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="47.67" y1="58.69" x2="43.13" y2="86.57" stroke="#000080" stroke-width="1.8"/>
+  <line x1="45.50" y1="57.79" x2="33.00" y2="82.37" stroke="#000080" stroke-width="1.8"/>
+  <line x1="43.64" y1="56.36" x2="24.30" y2="75.70" stroke="#000080" stroke-width="1.8"/>
+  <line x1="42.21" y1="54.50" x2="17.63" y2="71.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="41.31" y1="52.33" x2="13.43" y2="60.87" stroke="#000080" stroke-width="1.8"/>
+  <line x1="41.00" y1="50.00" x2="12.00" y2="50.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="41.31" y1="47.67" x2="13.43" y2="39.13" stroke="#000080" stroke-width="1.8"/>
+  <line x1="42.21" y1="45.50" x2="17.63" y2="29.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="43.64" y1="43.64" x2="24.30" y2="24.30" stroke="#000080" stroke-width="1.8"/>
+  <line x1="45.50" y1="42.21" x2="33.00" y2="17.63" stroke="#000080" stroke-width="1.8"/>
+  <line x1="47.67" y1="41.31" x2="43.13" y2="13.43" stroke="#000080" stroke-width="1.8"/>
+  <line x1="50.00" y1="41.00" x2="50.00" y2="12.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="52.33" y1="41.31" x2="56.87" y2="13.43" stroke="#000080" stroke-width="1.8"/>
+  <line x1="54.50" y1="42.21" x2="67.00" y2="17.63" stroke="#000080" stroke-width="1.8"/>
+  <line x1="56.36" y1="43.64" x2="75.70" y2="24.30" stroke="#000080" stroke-width="1.8"/>
+  <line x1="57.79" y1="45.50" x2="82.37" y2="29.00" stroke="#000080" stroke-width="1.8"/>
+  <line x1="58.69" y1="47.67" x2="86.57" y2="39.13" stroke="#000080" stroke-width="1.8"/>
+</svg>

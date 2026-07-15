@@ -1,29 +1,34 @@
+/**
+ * DRISHTI OTP Countdown
+ * Reads data-generated-at / data-expiry-minutes from #otp-time,
+ * updates #countdownDisplay, and marks #otpCountdown as expired.
+ */
 document.addEventListener('DOMContentLoaded', function () {
-  const otpTimeEl = document.getElementById('otp-time');
-  if (!otpTimeEl) return;
+  var metaEl   = document.getElementById('otp-time');
+  var display  = document.getElementById('countdownDisplay');
+  var box      = document.getElementById('otpCountdown');
+  if (!metaEl || !display) return;
 
-  const generatedAt = otpTimeEl.getAttribute('data-generated-at');
-  const expiryMinutes = parseInt(otpTimeEl.getAttribute('data-expiry-minutes'), 10);
+  var generatedAt   = metaEl.getAttribute('data-generated-at');
+  var expiryMinutes = parseInt(metaEl.getAttribute('data-expiry-minutes'), 10);
   if (!generatedAt || !expiryMinutes) return;
 
-  const otpExpiryTime = new Date(generatedAt).getTime() + expiryMinutes * 60 * 1000;
+  var expiresAt = new Date(generatedAt).getTime() + expiryMinutes * 60 * 1000;
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const timeLeft = otpExpiryTime - now;
-    const countdownEl = document.getElementById('countdown');
-
-    if (timeLeft <= 0) {
-      countdownEl.innerText = 'EXPIRED';
-      const submitBtn = document.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
-    } else {
-      const minutes = Math.floor(timeLeft / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-      countdownEl.innerText = `${minutes}m ${seconds}s`;
-      setTimeout(updateCountdown, 1000);
+  function tick() {
+    var remaining = expiresAt - Date.now();
+    if (remaining <= 0) {
+      display.textContent = 'EXPIRED';
+      if (box) box.classList.add('otp-countdown--expired');
+      /* Disable submit so the user knows they must restart */
+      var btn = document.querySelector('button[type="submit"]:not([name="wizard_goto_step"])');
+      if (btn) { btn.disabled = true; btn.textContent = 'OTP Expired — restart registration'; }
+      return;
     }
+    var m = Math.floor(remaining / 60000);
+    var s = Math.floor((remaining % 60000) / 1000);
+    display.textContent = m + ':' + String(s).padStart(2, '0');
+    setTimeout(tick, 1000);
   }
-
-  updateCountdown();
+  tick();
 });

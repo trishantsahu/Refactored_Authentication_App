@@ -1,0 +1,132 @@
+/*
+ * DRISHTI Design Tokens
+ * Digital Reactor Information, Shift Handover & Timeline Interface
+ * All design decisions expressed as CSS custom properties.
+ * Never hard-code a color, size, or spacing value outside this file.
+ */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────────── */
+  --drishti-blue:         #005A9C;
+  --drishti-blue-hover:   #004A82;
+  --drishti-blue-active:  #003A68;
+  --drishti-blue-light:   #E6F0F9;
+  --drishti-blue-subtle:  #C8DFF2;
+
+  /* ── Light-mode Surface ─────────────────────────────────── */
+  --color-bg:             #F2F4F7;
+  --color-surface:        #FFFFFF;
+  --color-surface-raised: #F8F9FA;
+  --color-border:         #DEE2E6;
+  --color-border-subtle:  #E9ECEF;
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --color-text-primary:   #1A2535;
+  --color-text-secondary: #5A6A7A;
+  --color-text-muted:     #9AABB8;
+  --color-text-inverse:   #FFFFFF;
+  --color-text-link:      var(--drishti-blue);
+
+  /* ── Status ─────────────────────────────────────────────── */
+  --color-success:        #198754;
+  --color-success-bg:     #D1E7DD;
+  --color-warning:        #B45309;
+  --color-warning-bg:     #FFF3CD;
+  --color-danger:         #C92A2A;
+  --color-danger-bg:      #F8D7DA;
+  --color-info:           #0369A1;
+  --color-info-bg:        #D0ECF8;
+
+  /* ── Header ─────────────────────────────────────────────── */
+  --header-height:        64px;
+  --header-bg:            #FFFFFF;
+  --header-border:        #DEE2E6;
+  --header-shadow:        0 1px 3px rgba(0,0,0,0.08);
+
+  /* ── Auth pages (dark panel) ────────────────────────────── */
+  --auth-left-bg:         #0A1628;
+  --auth-left-text:       #C8DDF2;
+  --auth-left-accent:     #4CA3DD;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-family:          'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:            'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  --text-xs:    0.75rem;    /* 12px */
+  --text-sm:    0.8125rem;  /* 13px */
+  --text-base:  0.9375rem;  /* 15px */
+  --text-md:    1rem;       /* 16px */
+  --text-lg:    1.125rem;   /* 18px */
+  --text-xl:    1.375rem;   /* 22px */
+  --text-2xl:   1.75rem;    /* 28px */
+  --text-3xl:   2.25rem;    /* 36px */
+
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  --leading-tight:   1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  /* ── Spacing (8-point grid) ─────────────────────────────── */
+  --sp-1:  0.25rem;   /*  4px */
+  --sp-2:  0.5rem;    /*  8px */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.25rem;   /* 20px */
+  --sp-6:  1.5rem;    /* 24px */
+  --sp-7:  1.75rem;   /* 28px */
+  --sp-8:  2rem;      /* 32px */
+  --sp-10: 2.5rem;    /* 40px */
+  --sp-12: 3rem;      /* 48px */
+  --sp-16: 4rem;      /* 64px */
+
+  /* ── Border Radius ──────────────────────────────────────── */
+  --radius-sm:  4px;
+  --radius-md:  8px;    /* buttons, inputs */
+  --radius-lg:  12px;   /* cards */
+  --radius-xl:  16px;   /* modals, dialogs */
+  --radius-full:9999px; /* pills */
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px  rgba(0,0,0,0.05);
+  --shadow-sm:  0 1px 4px  rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg:  0 8px 24px rgba(0,0,0,0.12);
+  --shadow-xl:  0 16px 40px rgba(0,0,0,0.14);
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --ease-fast:   100ms ease;
+  --ease-normal: 180ms ease;
+  --ease-slow:   300ms ease;
+
+  /* ── Z-index layers ─────────────────────────────────────── */
+  --z-base:    1;
+  --z-dropdown:100;
+  --z-sticky:  200;
+  --z-header:  300;
+  --z-modal:   400;
+  --z-toast:   500;
+}
+
+/* ── Dark Mode ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg:             #0F1923;
+  --color-surface:        #1A2535;
+  --color-surface-raised: #243044;
+  --color-border:         #2D3E54;
+  --color-border-subtle:  #1E2F44;
+
+  --color-text-primary:   #E2EAF4;
+  --color-text-secondary: #8FA8C4;
+  --color-text-muted:     #5A7A99;
+
+  --header-bg:            #1A2535;
+  --header-border:        #2D3E54;
+  --header-shadow:        0 1px 3px rgba(0,0,0,0.30);
+
+  --drishti-blue-light:   #0D2244;
+  --drishti-blue-subtle:  #1A3A6A;
+}

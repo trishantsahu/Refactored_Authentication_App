@@ -1,0 +1,59 @@
+/*
+ * DRISHTI Alert / Message boxes
+ */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--sp-5);
+}
+
+.alert__icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+.alert__body { flex: 1; }
+
+.alert__title {
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--sp-1);
+}
+
+.alert ul { padding-left: var(--sp-4); list-style: disc; }
+
+/* Variants */
+.alert--success {
+  background: var(--color-success-bg);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+.alert--warning {
+  background: var(--color-warning-bg);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+.alert--danger {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+.alert--info {
+  background: var(--color-info-bg);
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+
+/* Django message tags → alert variants */
+.alert--success { background: var(--color-success-bg); border-color: var(--color-success); color: #0A4D28; }
+.alert--error   { background: var(--color-danger-bg);  border-color: var(--color-danger);  color: #7A1010; }
+.alert--warning { background: var(--color-warning-bg); border-color: #D97706;              color: #7A3A00; }
+.alert--debug   { background: var(--color-info-bg);    border-color: var(--color-info);    color: #024A70; }
+
+[data-theme="dark"] .alert--success { background: #0A2E1A; }
+[data-theme="dark"] .alert--error   { background: #2E0A0A; }
+[data-theme="dark"] .alert--warning { background: #2E1E00; }
+[data-theme="dark"] .alert--info    { background: #0A1E2E; }

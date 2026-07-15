@@ -1,48 +1,155 @@
-{% extends "base_generic.html" %}
+{% extends "auth_base.html" %}
+{% load static %}
 
-{% block content %}
-<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="col-md-4">
-        <h2 class="text-center mb-4">LOGIN</h2>
+{% block title %}DRISHTI — Login{% endblock %}
 
-        {% if messages %}
-        <div class="alert alert-warning">
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
+{% block body %}
+<div class="auth-split">
+
+  <!-- ═══════════ LEFT PANEL ═══════════ -->
+  <div class="auth-split__left">
+    <div class="auth-split__left-content">
+
+      <div class="auth-brand">
+        <div class="auth-brand__emblem-wrap">
+          <img src="{% static 'UserAuthentication/images/emblem.svg' %}"
+               alt="Ashoka Chakra"
+               class="auth-brand__emblem">
         </div>
-        {% endif %}
-
-        {% if form.non_field_errors %}
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
+        <div>
+          <div class="auth-brand__name">DRISHTI</div>
+          <div class="auth-brand__script">दृष्टि</div>
         </div>
-        {% endif %}
+        <div class="auth-brand__expansion">
+          Digital Reactor Information,<br>
+          Shift Handover &amp; Timeline Interface
+        </div>
+        <div class="auth-brand__tagline">
+          Continuous Oversight for Safe Reactor Operations
+        </div>
+      </div>
 
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.username }}
-                {% for error in form.username.errors %}
-                    <small class="form-text text-danger">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.password }}
-                {% for error in form.password.errors %}
-                    <small class="form-text text-danger">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-        </form>
-        <p class="text-center mt-3"> New user? <a href="{% url 'register' %}">Register here</a></p>
-        <p><a href="{% url 'forgot_password' %}">Forgot password?</a></p>
+      <!-- Reactor illustration -->
+      <div class="auth-reactor">
+        <img src="{% static 'UserAuthentication/images/reactor.svg' %}"
+             alt="Reactor pool schematic"
+             width="260" height="325">
+      </div>
+
+      <!-- Feature highlights -->
+      <div class="auth-features">
+        <div class="auth-feature">
+          <span class="auth-feature__icon">✓</span>
+          <span class="auth-feature__text">Secure Employee Authentication</span>
+        </div>
+        <div class="auth-feature">
+          <span class="auth-feature__icon">✓</span>
+          <span class="auth-feature__text">Shift Handover & Timeline Logging</span>
+        </div>
+        <div class="auth-feature">
+          <span class="auth-feature__icon">✓</span>
+          <span class="auth-feature__text">Equipment Monitoring Dashboard</span>
+        </div>
+        <div class="auth-feature">
+          <span class="auth-feature__icon">✓</span>
+          <span class="auth-feature__text">Apsara-U Research Reactor, BARC</span>
+        </div>
+      </div>
+
+      <div class="auth-version">DRISHTI v0.1 · BARC Internal</div>
+
     </div>
+  </div>
+
+  <!-- ═══════════ RIGHT PANEL ═══════════ -->
+  <div class="auth-split__right">
+    <div class="auth-form-panel">
+
+      <h1 class="auth-form-panel__heading">Welcome back</h1>
+      <p class="auth-form-panel__subheading">
+        Sign in with your username, employee ID, or email address.
+      </p>
+
+      <!-- Django messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags|default:'info' }}">
+            <div class="alert__body">{{ message }}</div>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- Form errors -->
+      {% if form.non_field_errors %}
+        <div class="alert alert--danger">
+          <div class="alert__body">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <!-- Username / Employee ID / Email -->
+        <div class="field">
+          <label class="field__label" for="id_username">
+            Username / Employee ID / Email
+          </label>
+          <input class="field__input {% if form.username.errors %}field__input--error{% endif %}"
+                 type="text"
+                 id="id_username"
+                 name="username"
+                 placeholder="Enter your identifier"
+                 autocomplete="username"
+                 autofocus
+                 value="{{ form.username.value|default:'' }}">
+          {% for error in form.username.errors %}
+            <span class="field__error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label class="field__label" for="id_password">
+            Password
+          </label>
+          <div class="field__pw-wrap">
+            <input class="field__input {% if form.password.errors %}field__input--error{% endif %}"
+                   type="password"
+                   id="id_password"
+                   name="password"
+                   placeholder="Enter your password"
+                   autocomplete="current-password">
+            <button type="button" class="field__pw-toggle" onclick="togglePw('id_password',this)" aria-label="Show/hide password">👁</button>
+          </div>
+          {% for error in form.password.errors %}
+            <span class="field__error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block btn--lg" style="margin-top:var(--sp-6);">
+          Sign In
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <a href="{% url 'forgot_password' %}">Forgot your password?</a>
+        <span>New employee? <a href="{% url 'register' %}">Register here</a></span>
+      </div>
+
+    </div>
+  </div>
+
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+</script>
 {% endblock %}

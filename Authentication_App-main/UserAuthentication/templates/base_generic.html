@@ -1,81 +1,157 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Library App</title>
-    {% load static %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'UserAuthentication/base_generic.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DRISHTI — Digital Reactor Information, Shift Handover & Timeline Interface">
+  <title>{% block title %}DRISHTI{% endblock %}</title>
 
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <!-- DRISHTI Design System -->
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/design/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/design/base.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/components/header.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/components/buttons.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/components/forms.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/components/alerts.css' %}">
+  <link rel="stylesheet" href="{% static 'UserAuthentication/css/components/feedback.css' %}">
+  {% block extra_css %}{% endblock %}
+
+  <!-- Theme: apply before paint to prevent flash -->
+  <script src="{% static 'UserAuthentication/js/theme.js' %}"></script>
 </head>
 <body>
-<header>
-    <nav>
-        {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
-        {% else %}
-        <!-- <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
-        <a href="{% url 'register' %}"><button class="btn btn-primary">Register</button></a> -->
-        {% endif %}
-    </nav>
-    <h1 class="text-center py-4">Welcome to User Authentication</h1>
-    
-    <!-- Clock Display -->
-    <div id="clock" style="font-size: 2rem; text-align: center;"></div>
 
-    <div class="top-right-container">   
-        <!-- style="position: fixed; top: 50px; right: 20px; display: flex; flex-direction: row-reverse; align-items: center;" -->
-        <!-- Clock Display -->
-         
-        <div id="clock" style="font-size: 1.0rem; color: white;"></div>
+<!-- ══════════════════════════════════════════════
+     DRISHTI HEADER (64px, two-row compact)
+     ══════════════════════════════════════════════ -->
+<header class="drishti-header" role="banner">
+  <div class="drishti-header__inner">
 
-        <!-- Toggle Switch for Day/Night Mode -->
-        <div class="toggle-container mt-3">
-            <label class="switch">
-                <input type="checkbox" id="toggle-checkbox">
-                <span class="slider round"></span>
-            </label>
+    <!-- Row 1: Brand + Page title -->
+    <div class="header-row-brand">
+      <a href="{% url 'home' %}" class="header-brand" aria-label="DRISHTI home">
+        <img src="{% static 'UserAuthentication/images/emblem.svg' %}"
+             alt="Ashoka Chakra"
+             class="header-brand__emblem"
+             width="26" height="26">
+        <div>
+          <div class="header-brand__name">DRISHTI</div>
+          <div class="header-brand__script">दृष्टि</div>
         </div>
+      </a>
+      <span class="header-page-title">{% block page_title %}Dashboard{% endblock %}</span>
     </div>
+
+    <!-- Row 2: Controls -->
+    <div class="header-row-controls">
+      <!-- Theme toggle -->
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
+        <span class="theme-toggle__icon">🌙</span>
+        <span class="theme-toggle__label">Dark</span>
+      </button>
+
+      <span class="header-spacer"></span>
+
+      <!-- Clock -->
+      <span class="header-clock drishti-clock" aria-live="off" aria-label="Current IST time">--:--:-- IST</span>
+
+      <!-- User info -->
+      {% if user.is_authenticated %}
+      <div class="header-user">
+        <div class="header-user__avatar" aria-hidden="true">
+          {{ user.first_name|first|default:user.username|first|upper }}
+        </div>
+        <span class="header-user__name">{{ user.first_name|default:user.username }}</span>
+      </div>
+
+      <!-- Logout (POST form required in modern Django) -->
+      <form method="POST" action="{% url 'logout' %}" style="display:contents;">
+        {% csrf_token %}
+        <button type="submit" class="header-logout" aria-label="Log out">
+          Logout
+        </button>
+      </form>
+      {% endif %}
+    </div>
+
+  </div>
 </header>
 
-<main>
-    {% block content %}
-    {% endblock %}
+<!-- ══════════════════════════════════════════════
+     DJANGO MESSAGES
+     ══════════════════════════════════════════════ -->
+{% if messages %}
+<div style="padding: var(--sp-4) var(--sp-6) 0;" role="alert">
+  {% for message in messages %}
+  <div class="alert alert--{{ message.tags|default:'info' }}">
+    <div class="alert__body">{{ message }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ══════════════════════════════════════════════
+     PAGE CONTENT
+     ══════════════════════════════════════════════ -->
+<main class="drishti-app-body" id="main-content">
+  {% block content %}{% endblock %}
 </main>
 
-<!-- Feedback Button -->
-<button id="feedbackButton" class="btn btn-info" style="position: fixed; bottom: 20px; right: 20px;width: auto;">Feedback</button>
-
-<!-- Feedback Popup -->
-<div id="feedbackPopup" class="feedback-popup">
-    <div class="popup-content">
-        <span id="closePopup" class="close">&times;</span>
-        <h4>Feedback</h4>
-        <form id="feedbackForm" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+<!-- ══════════════════════════════════════════════
+     FEEDBACK WIDGET
+     ══════════════════════════════════════════════ -->
+<div class="feedback-trigger" id="feedbackTrigger">
+  <!-- Dropdown options -->
+  <div class="feedback-options">
+    <button class="feedback-option" type="button" data-type="bug" data-label="Report a Bug">
+      🐞 Report Bug
+    </button>
+    <button class="feedback-option" type="button" data-type="suggestion" data-label="Suggest an Improvement">
+      💡 Suggest Feature
+    </button>
+  </div>
+  <!-- Pill -->
+  <button class="feedback-pill" type="button" aria-expanded="false" aria-haspopup="true">
+    💬 Feedback
+  </button>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'UserAuthentication/js/feedback.js' %}"></script>
+<!-- Feedback modal -->
+<div class="feedback-modal-backdrop" id="feedbackBackdrop" role="dialog" aria-modal="true" aria-labelledby="feedbackModalHeading">
+  <div class="feedback-modal">
+    <div class="feedback-modal__header">
+      <h2 class="feedback-modal__title" id="feedbackModalHeading">Feedback</h2>
+      <button class="feedback-modal__close" id="feedbackClose" aria-label="Close feedback">✕</button>
+    </div>
+    <form id="feedbackForm" method="POST" action="{% url 'feedback' %}">
+      {% csrf_token %}
+      <input type="hidden" id="feedbackType" name="type" value="general">
+      <div class="field">
+        <label class="field__label" for="fb-name">Your Name</label>
+        <input class="field__input" type="text" id="fb-name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="field">
+        <label class="field__label" for="fb-desc">Description</label>
+        <textarea class="field__input" id="fb-desc" name="description" rows="4"
+                  placeholder="Describe your feedback..." required
+                  style="height:auto;padding-top:.75rem;padding-bottom:.75rem;resize:vertical;"></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary btn--block" style="margin-top:var(--sp-4);">
+        Submit Feedback
+      </button>
+    </form>
+  </div>
+</div>
 
+<!-- Scripts -->
+<script src="{% static 'UserAuthentication/js/clock.js' %}"></script>
+<script src="{% static 'UserAuthentication/js/feedback.js' %}"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,65 @@
+/*
+ * DRISHTI Base Styles
+ * Reset, root layout, and foundational elements.
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:    var(--font-family);
+  font-size:      var(--text-base);
+  font-weight:    var(--weight-normal);
+  line-height:    var(--leading-normal);
+  color:          var(--color-text-primary);
+  background:     var(--color-bg);
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background var(--ease-slow), color var(--ease-slow);
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+}
+a:hover { color: var(--drishti-blue-hover); text-decoration: underline; }
+
+img, svg { display: block; max-width: 100%; }
+
+ul, ol { list-style: none; }
+
+button { cursor: pointer; font-family: inherit; }
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+::selection {
+  background: var(--drishti-blue-subtle);
+  color: var(--color-text-primary);
+}
+
+/* ── Scrollbar (Webkit) ───── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* ── Focus ring ───────────── */
+:focus-visible {
+  outline: 2px solid var(--drishti-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

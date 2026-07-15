@@ -1,0 +1,127 @@
+/*
+ * DRISHTI Feedback Widget — floating pill, bottom-right
+ */
+
+.feedback-trigger {
+  position: fixed;
+  bottom: var(--sp-6);
+  right: var(--sp-6);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-2);
+}
+
+/* Pill button */
+.feedback-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--drishti-blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all var(--ease-normal);
+}
+.feedback-pill:hover {
+  background: var(--drishti-blue-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/* Dropdown options (shown on hover / click) */
+.feedback-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity var(--ease-normal), transform var(--ease-normal);
+}
+.feedback-trigger.open .feedback-options {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.feedback-option {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  transition: all var(--ease-fast);
+}
+.feedback-option:hover {
+  background: var(--drishti-blue-light);
+  border-color: var(--drishti-blue);
+  color: var(--drishti-blue);
+}
+
+/* ── Feedback Modal ── */
+.feedback-modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,0.55);
+  z-index: var(--z-modal);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.feedback-modal-backdrop.open { display: flex; }
+
+.feedback-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--sp-8);
+  width: min(420px, calc(100vw - 2rem));
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.feedback-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+}
+.feedback-modal__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+.feedback-modal__close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: var(--sp-1);
+  border-radius: var(--radius-sm);
+  transition: color var(--ease-fast);
+}
+.feedback-modal__close:hover { color: var(--color-text-primary); }
+
+[data-theme="dark"] .feedback-option {
+  background: var(--color-surface-raised);
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .feedback-modal { background: var(--color-surface); }

@@ -1,0 +1,183 @@
+/*
+ * DRISHTI App Header — 64px compact, two-row layout
+ * Row 1: Brand + Page Title
+ * Row 2: Theme toggle + Clock + User + Logout
+ */
+
+.drishti-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  width: 100%;
+  height: var(--header-height);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: var(--header-shadow);
+  transition: background var(--ease-slow), border-color var(--ease-slow);
+}
+
+.drishti-header__inner {
+  display: grid;
+  grid-template-rows: 34px 30px;
+  height: 100%;
+  padding: 0 var(--sp-6);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ── Row 1: Brand + Page Title ── */
+.header-row-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+}
+
+.header-brand__emblem {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+/* Invert emblem on dark mode since it's navy on white */
+[data-theme="dark"] .header-brand__emblem {
+  filter: brightness(2.2) hue-rotate(200deg) saturate(0.4);
+}
+
+.header-brand__name {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--drishti-blue);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+[data-theme="dark"] .header-brand__name { color: var(--auth-left-accent); }
+
+.header-brand__script {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-normal);
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.header-page-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── Row 2: Controls ── */
+.header-row-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+/* Clock */
+.header-clock {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-1) var(--sp-2);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: all var(--ease-normal);
+  white-space: nowrap;
+  height: 24px;
+}
+.theme-toggle:hover {
+  background: var(--color-surface-raised);
+  border-color: var(--drishti-blue);
+  color: var(--drishti-blue);
+}
+.theme-toggle__icon { font-size: 13px; }
+
+/* Spacer */
+.header-spacer { flex: 1; }
+
+/* User info */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.header-user__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.header-user__avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--drishti-blue-light);
+  border: 1px solid var(--drishti-blue-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--drishti-blue);
+  font-weight: var(--weight-semibold);
+}
+
+[data-theme="dark"] .header-user__avatar {
+  background: var(--drishti-blue-light);
+  color: var(--auth-left-accent);
+}
+
+/* Logout button */
+.header-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-3);
+  height: 24px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--ease-normal);
+}
+.header-logout:hover {
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+/* ── App layout below header ── */
+.drishti-app-body {
+  min-height: calc(100vh - var(--header-height));
+  background: var(--color-bg);
+  transition: background var(--ease-slow);
+}

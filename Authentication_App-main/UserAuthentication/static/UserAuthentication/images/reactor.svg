@@ -1,0 +1,129 @@
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Cherenkov glow gradient -->
+    <radialGradient id="cherenkovGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00BFFF" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#0080FF" stop-opacity="0.7"/>
+      <stop offset="75%" stop-color="#0040C0" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#001060" stop-opacity="0.1"/>
+    </radialGradient>
+    <!-- Pool water gradient -->
+    <radialGradient id="poolWater" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#00CFFF" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#0055CC" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#001A66" stop-opacity="0.95"/>
+    </radialGradient>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1628"/>
+      <stop offset="100%" stop-color="#0D1F40"/>
+    </linearGradient>
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="500" fill="url(#bgGrad)"/>
+
+  <!-- Grid lines (engineering blueprint feel) -->
+  <g opacity="0.06" stroke="#4488CC" stroke-width="0.5">
+    <line x1="0" y1="50" x2="400" y2="50"/>
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="150" x2="400" y2="150"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="0" y1="250" x2="400" y2="250"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="0" y1="350" x2="400" y2="350"/>
+    <line x1="0" y1="400" x2="400" y2="400"/>
+    <line x1="0" y1="450" x2="400" y2="450"/>
+    <line x1="50" y1="0" x2="50" y2="500"/>
+    <line x1="100" y1="0" x2="100" y2="500"/>
+    <line x1="150" y1="0" x2="150" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="500"/>
+    <line x1="250" y1="0" x2="250" y2="500"/>
+    <line x1="300" y1="0" x2="300" y2="500"/>
+    <line x1="350" y1="0" x2="350" y2="500"/>
+  </g>
+
+  <!-- Reactor pool outer structure -->
+  <ellipse cx="200" cy="250" rx="130" ry="155" fill="#0D2244" stroke="#1A3A6A" stroke-width="8"/>
+
+  <!-- Pool water with Cherenkov glow -->
+  <ellipse cx="200" cy="250" rx="118" ry="142" fill="url(#poolWater)" opacity="0.9"/>
+
+  <!-- Inner glow core -->
+  <ellipse cx="200" cy="250" rx="80" ry="95" fill="url(#cherenkovGlow)" filter="url(#softGlow)"/>
+
+  <!-- Reactor core rings (fuel assemblies) -->
+  <g opacity="0.7" fill="none" stroke="#88DDFF" stroke-width="1">
+    <ellipse cx="200" cy="250" rx="20" ry="24"/>
+    <ellipse cx="200" cy="250" rx="38" ry="45"/>
+    <ellipse cx="200" cy="250" rx="56" ry="67"/>
+    <ellipse cx="200" cy="250" rx="74" ry="88"/>
+  </g>
+
+  <!-- Fuel rod dots at core -->
+  <g fill="#CCEEFF" filter="url(#glow)" opacity="0.9">
+    <!-- Center -->
+    <circle cx="200" cy="250" r="3"/>
+    <!-- Ring 1 -->
+    <circle cx="200" cy="226" r="2.5"/><circle cx="200" cy="274" r="2.5"/>
+    <circle cx="178" cy="250" r="2.5"/><circle cx="222" cy="250" r="2.5"/>
+    <!-- Ring 2 -->
+    <circle cx="200" cy="205" r="2"/><circle cx="200" cy="295" r="2"/>
+    <circle cx="162" cy="250" r="2"/><circle cx="238" cy="250" r="2"/>
+    <circle cx="174" cy="216" r="2"/><circle cx="226" cy="284" r="2"/>
+    <circle cx="226" cy="216" r="2"/><circle cx="174" cy="284" r="2"/>
+    <!-- Ring 3 -->
+    <circle cx="200" cy="183" r="1.8"/><circle cx="200" cy="317" r="1.8"/>
+    <circle cx="144" cy="250" r="1.8"/><circle cx="256" cy="250" r="1.8"/>
+  </g>
+
+  <!-- Water surface ripples at top -->
+  <g opacity="0.4" stroke="#66CCFF" stroke-width="1.2" fill="none">
+    <path d="M 120 115 Q 200 105 280 115"/>
+    <path d="M 140 125 Q 200 117 260 125"/>
+    <path d="M 155 135 Q 200 128 245 135"/>
+  </g>
+
+  <!-- Concrete pool structure - top edge -->
+  <rect x="60" y="98" width="280" height="18" rx="4" fill="#1C2E4A" stroke="#2A4A6E" stroke-width="2"/>
+
+  <!-- Reactor top cap -->
+  <ellipse cx="200" cy="107" rx="120" ry="10" fill="#152240" stroke="#2A4A6E" stroke-width="2.5"/>
+
+  <!-- Control rods (vertical lines entering from top) -->
+  <g stroke="#44AADD" stroke-width="2.5" opacity="0.6">
+    <line x1="168" y1="107" x2="168" y2="200"/>
+    <line x1="188" y1="107" x2="188" y2="195"/>
+    <line x1="200" y1="107" x2="200" y2="185"/>
+    <line x1="212" y1="107" x2="212" y2="195"/>
+    <line x1="232" y1="107" x2="232" y2="200"/>
+  </g>
+
+  <!-- Bottom pool structure -->
+  <ellipse cx="200" cy="393" rx="120" ry="10" fill="#152240" stroke="#2A4A6E" stroke-width="2.5"/>
+  <rect x="60" y="384" width="280" height="18" rx="4" fill="#1C2E4A" stroke="#2A4A6E" stroke-width="2"/>
+
+  <!-- Side measurement lines / schematic marks -->
+  <g stroke="#2A5080" stroke-width="1" opacity="0.5">
+    <line x1="42" y1="107" x2="42" y2="395"/>
+    <line x1="38" y1="107" x2="46" y2="107"/>
+    <line x1="38" y1="250" x2="46" y2="250"/>
+    <line x1="38" y1="395" x2="46" y2="395"/>
+    <line x1="358" y1="107" x2="358" y2="395"/>
+    <line x1="354" y1="107" x2="362" y2="107"/>
+    <line x1="354" y1="395" x2="362" y2="395"/>
+  </g>
+
+  <!-- Bottom label -->
+  <text x="200" y="472" font-family="monospace" font-size="11" fill="#3A6A9A" text-anchor="middle" opacity="0.7">APSARA-U RESEARCH REACTOR POOL</text>
+  <text x="200" y="488" font-family="monospace" font-size="9" fill="#2A4A6A" text-anchor="middle" opacity="0.5">SCHEMATIC VIEW — NOT TO SCALE</text>
+</svg>
